@@ -1,0 +1,1675 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Information Domain - Main conceptual entity API.",
+    "description": "Sample API template extended.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Support name contact."
+    }
+  },
+  "host": "api.example.com",
+  "basePath": "/information-domain/principal-resources/v1",
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Orders"
+    },
+    {
+      "name": "Demo-resources"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create User.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Create User using UserType definition').",
+        "operationId": "createUser",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "User.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "user"
+              ],
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/UserType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource created successfully.",
+            "schema": {
+              "$ref": "#/definitions/UserType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Find all Users.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Find a list of Users. Can be filtered by name and surname. This method allow pagination(If isn't used, all results will be returned)').",
+        "operationId": "getUsers",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "type": "string",
+            "description": "User's name."
+          },
+          {
+            "in": "query",
+            "name": "surname",
+            "type": "string",
+            "description": "User's surname."
+          },
+          {
+            "name": "firstPage",
+            "in": "query",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sizePage",
+            "in": "query",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Parameter to order results. Use '+-' to indicated the direction.",
+            "type": "string",
+            "required": false,
+            "default": "+id",
+            "enum": [
+              "+id",
+              "-id",
+              "+name",
+              "-name",
+              "+surname",
+              "-surname"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref":  "#/definitions/SuccessGetCollectionUser"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get a User data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get a User by Id').",
+        "operationId": "getUser",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "number",
+            "description": "User Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref": "#/definitions/SuccessUser"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Modify a User data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Modify a User by Id').",
+        "operationId": "updateUserUsingPATCH",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "number",
+            "description": "User Id.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "User.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "user"
+              ],
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/UserType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/UserType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a User data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Delete a User by Id').",
+        "operationId": "deleteUser",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "number",
+            "description": "User Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted successfully."
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "Create Product.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Create Product using ProductType definition').",
+        "operationId": "createProduct",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Product.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "product"
+              ],
+              "properties": {
+                "product": {
+                  "$ref": "#/definitions/ProductType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource created successfully.",
+            "schema": {
+              "$ref": "#/definitions/ProductType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Edit Product.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Edit Product by identifier using ProductType definition').",
+        "operationId": "updateProductUsingPUT",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Product.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "product"
+              ],
+              "properties": {
+                "product": {
+                  "$ref": "#/definitions/ProductType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/ProductType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Find all Products.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Find a list of Products. Can be filtered by name, price, and isAvailable params. This method allow pagination(If isn't used, all results will be returned)').",
+        "operationId": "getProducts",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "type": "string",
+            "description": "Product name."
+          },
+          {
+            "in": "query",
+            "name": "isAvailable",
+            "type": "boolean",
+            "description": "Product available or not."
+          },
+          {
+            "name": "firstPage",
+            "in": "query",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sizePage",
+            "in": "query",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Parameter to order results. Use '+-' to indicated the direction.",
+            "type": "string",
+            "required": false,
+            "default": "+id",
+            "enum": [
+              "+id",
+              "-id",
+              "+name",
+              "-name"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref":  "#/definitions/SuccessGetCollectionProduct"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}": {
+      "get": {
+        "summary": "Get a Product data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get a Product by Id').",
+        "operationId": "getProduct",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "path",
+            "name": "productId",
+            "type": "number",
+            "description": "Product Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref": "#/definitions/SuccessProduct"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Modify a Product data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Modify a Product by Id').",
+        "operationId": "updateProductUsingPATCH",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "type": "number",
+            "description": "Product Id.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Product.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "product"
+              ],
+              "properties": {
+                "product": {
+                  "$ref": "#/definitions/ProductType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/ProductType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Product data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Delete a Product by Id').",
+        "operationId": "deleteProduct",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "type": "number",
+            "description": "Product Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted successfully."
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "summary": "Find all Orders.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Find a list of Orders. This method allow pagination(If isn't used, all results will be returned)').",
+        "operationId": "getOrders",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "name": "firstPage",
+            "in": "query",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sizePage",
+            "in": "query",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Parameter to order results. Use '+-' to indicated the direction.",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "+id",
+              "-id",
+              "+creationDate",
+              "-creationDate"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref":  "#/definitions/SuccessGetCollectionOrder"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "summary": "Get a Order data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get a Order by Id').",
+        "operationId": "getOrder",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "path",
+            "name": "orderId",
+            "type": "number",
+            "description": "Order Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref": "#/definitions/SuccessOrder"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Modify a Order data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Modify a Order by Id').",
+        "operationId": "updateOrderUsingPATCH",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "type": "number",
+            "description": "Order Id.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Order.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "order"
+              ],
+              "properties": {
+                "order": {
+                  "$ref": "#/definitions/OrderType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/OrderType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Order data.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Delete a Order by Id').",
+        "operationId": "deleteOrder",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "type": "number",
+            "description": "Order Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted successfully."
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/orders": {
+      "get": {
+        "summary": "Get all Orders from a User.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get all Orders by User Id').",
+        "operationId": "getOrdersFromUser",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "number",
+            "description": "User Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref":  "#/definitions/SuccessGetCollectionOrder"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create each order for User.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Create Order using OrderType definition for User').",
+        "operationId": "createOrderForUser",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "number",
+            "description": "User Id.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Order.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "order"
+              ],
+              "properties": {
+                "order": {
+                  "$ref": "#/definitions/OrderType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource created successfully.",
+            "schema": {
+              "$ref": "#/definitions/OrderType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/demo-resources": {
+      "post": {
+        "summary": "Create DemoResource.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Create DemoResource using DemoResourceType definition').",
+        "operationId": "createDemoResource",
+        "tags": [
+          "Demo-resources"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "DemoResource.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "demoResource"
+              ],
+              "properties": {
+                "demoResource": {
+                  "$ref": "#/definitions/DemoResourceType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource created successfully.",
+            "schema": {
+              "$ref": "#/definitions/DemoResourceType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Find all DemoResources.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Find a list of DemoResources').",
+        "operationId": "getDemoResources",
+        "tags": [
+          "Demo-resources"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref":  "#/definitions/SuccessGetCollectionDemoResource"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    },
+    "/demo-resources/{demoResourceId}": {
+      "get": {
+        "summary": "Get a DemoResource.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get a DemoResource by Id').",
+        "operationId": "getDemoResource",
+        "tags": [
+          "Demo-resources"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "type": "string",
+            "description": "Favourite language.",
+            "required": false,
+            "default": "es-ES"
+          },
+          {
+            "in": "path",
+            "name": "demoResourceId",
+            "type": "number",
+            "description": "DemoResource Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource obtained successfully.",
+            "schema": {
+              "$ref": "#/definitions/SuccessDemoResource"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Modify a DemoResource.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Modify a DemoResource by Id').",
+        "operationId": "updateDemoResourceUsingPATCH",
+        "tags": [
+          "Demo-resources"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "demoResourceId",
+            "type": "number",
+            "description": "DemoResource Id.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "DemoResource.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "user"
+              ],
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/DemoResourceType"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/DemoResourceType"
+            }
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a DemoResource.",
+        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Delete a DemoResource by Id').",
+        "operationId": "deleteDemoResource",
+        "tags": [
+          "Demo-resources"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "demoResourceId",
+            "type": "number",
+            "description": "DemoResourceId Id.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted successfully."
+          },
+          "400": {
+            "description": "Bad request or functional error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorType"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UserType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "User's Id."
+        },
+        "alias": {
+          "type": "string",
+          "description": "User's alias."
+        },
+        "name": {
+          "type": "string",
+          "description": "User's name."
+        },
+        "surname": {
+          "type": "string",
+          "description": "User's surname."
+        },
+        "secondSurname": {
+          "type": "string",
+          "description": "User's second surname."
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date",
+          "description": "User's birthdate."
+        }
+      }
+    },
+    "ProductType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Product's Id."
+        },
+        "name": {
+          "type": "string",
+          "description": "Product's name."
+        },
+        "category": {
+          "type": "string",
+          "description": "Product's category."
+        },
+        "price": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Product's price per unit."
+        },
+        "isAvailable": {
+          "type": "boolean",
+          "description": "Is a product current for sale."
+        }
+      }
+    },
+    "OrderType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Order's Id."
+        },
+        "user": {
+          "$ref": "#/definitions/UserIdResource"
+        },
+        "dates": {
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OrderDatesType"
+            }
+          ]
+        },
+        "products": {
+          "type": "array",
+          "description": "Order Products.",
+          "items": {
+            "$ref": "#/definitions/ProductIdResource"
+          }
+        }
+      }
+    },
+    "OrderDatesType": {
+      "type": "object",
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Order's creation date."
+        },
+        "preparationDate": {
+          "type": "string",
+          "description": "Date and time of preparation of the order.",
+          "format": "date-time"
+        },
+        "deliveryDate": {
+          "type": "string",
+          "description": "End date and time of the sales order once it has been completed and handed over to the customer.",
+          "format": "date-time"
+        },
+        "cancellationDate": {
+          "type": "string",
+          "description": "Date and time of cancellation of the order.",
+          "format": "date-time"
+        }
+      }
+    },
+    "DemoResourceType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Demo Resource's Id."
+        },
+        "description": {
+          "type": "string",
+          "description": "Demo Resource's description."
+        },
+        "orders": {
+          "type": "array",
+          "description": "Demo Resources Orders.",
+          "items": {
+            "$ref": "#/definitions/OrderIdResource"
+          }
+        }
+      }
+    },
+    "UserIdResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "ProductIdResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "OrderIdResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "SuccessGetCollectionUser": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserType"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/PaginationType"
+        }
+      }
+    },
+    "SuccessGetCollectionProduct": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductType"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/PaginationType"
+        }
+      }
+    },
+    "SuccessGetCollectionOrder": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderType"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/PaginationType"
+        }
+      }
+    },
+    "SuccessGetCollectionDemoResource": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DemoResourceType"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/PaginationType"
+        }
+      }
+    },
+    "SuccessUser": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "$ref": "#/definitions/UserType"
+        }
+      }
+    },
+    "SuccessProduct": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "$ref": "#/definitions/ProductType"
+        }
+      }
+    },
+    "SuccessOrder": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "$ref": "#/definitions/OrderType"
+        }
+      }
+    },
+    "SuccessDemoResource": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object"
+        },
+        "data": {
+          "$ref": "#/definitions/DemoResourceType"
+        }
+      }
+    },
+    "ErrorType": {
+      "type": "object",
+      "required": [
+        "code",
+        "description"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "description": "Detailed backend Error: backend error Id + message text.",
+          "items": {
+            "$ref": "#/definitions/ErrorTypeDetails"
+          }
+        }
+      }
+    },
+    "ErrorTypeDetails": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": ""
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "PaginationType": {
+      "type": "object",
+      "properties": {
+        "requestedPage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "requestedSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "retrievedResults": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalResults": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nextPage": {
+          "type": "string",
+          "example": "https://api.example.com/information-domain/principal-resources/v1/users?firstPage=2&pageSize=10"
+        },
+        "previousPage": {
+          "type": "string",
+          "example": "https://api.example.com/information-domain/principal-resources/v1/users?firstPage=1&pageSize=10"
+        }
+      }
+    }
+  }
+}
