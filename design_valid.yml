@@ -1,0 +1,191 @@
+extends: spectral:oas
+functions: []
+rules:
+  example-value-or-externalValue: false
+  oas3-unused-components-schema: false # needed by inter-file references e.g. Voice API
+  oas3-valid-content-schema-example: false
+  oas3-valid-oas-content-example: false
+  oas3-valid-oas-parameter-example: false
+  oas3-valid-parameter-schema-example: false
+  oas3-valid-schema-example: false
+  openapi-tags: false
+  operation-description: false
+  operation-tags: false
+
+################################################################################################
+# INICIO - General Functions
+################################################################################################
+  
+  
+  # Check basepath the resource is in plural
+  basepath-resource:
+    description: "BasePath: El elemento principal debe de expresarse en plural."
+    severity: warn
+    message: "API03: Invalid property value: {{value}} (expected: The resource is not plural)."
+    recommended: true
+    given: "$.basePath"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/([a-z]|-[a-z])+/([a-z]|-[a-z])+s/v[1-9])$"
+  
+  # Check basepath the information domain is in singular
+  basepath-informationDomain:
+    description: "BasePath: El Dominio de Información debe de expresarse en singular."
+    severity: warn
+    message: "API03B: Invalid property value: {{value}} (expected: The information domain is not singular)."
+    recommended: true
+    given: "$.basePath"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(/([a-z]|-[a-z])+s/([a-z]|-[a-z])+s/v[1-9])$"
+
+  # Check summary start with a capital and end a dot
+  title-validation:
+    description: "El título de la API estará compuesto por el nombre del negocio y el recurso que principalmente se expone, separados por guiones."
+    severity: error
+    message: "API02: Invalid property value: {{value}} (expected: Information Domain - Main Conceptual Entity API.)."
+    recommended: true
+    given: "$.info.title"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z]).+( - )+([A-Z]).+API\\."
+
+
+  # Check summary start with a capital and end a dot
+  sumary-dot:
+    description: "La primera palabra de cada descripción del contrato será en lenguaje capitalizado. Además las descripciones tienen que tienen que terminar en '.'."
+    severity: error
+    message: "CONT08: Invalid property value: {{value}} (expected: Start with a capital and end a dot)."
+    recommended: true
+    given: ["$..description", "$..summary"]
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z]+(\\w+)).+\\.$"
+
+  # Check operation name. Should be contain post, put, delete, patch or get.
+  operationId-name:
+    description: "En los campos summary y description de las operaciones del swagger usaremos: GET: Obtener, POST: Crear, Obtener (si se utiliza como GET) ,PUT: Reemplazar, PATCH: Modificar, DELETE: Eliminar."
+    severity: warn
+    message: "SWAG01: Invalid property name: {{value}} (expected: Start with update, create, notify, send, execute, get, post, put, patch or delete)."
+    recommended: true
+    given: ["$..operationId"]
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(post|put|delete|patch|get|update|create|notify|send|execute).*$"
+ 
+    
+  # Check field names meet api standards
+  property-names:
+    description: Se DEBE usar la escritura camelCase en minúsculas.
+    severity: error
+    message: "CONT02: Invalid property value: {{value}} (expected: Case A lowercase)."
+    recommended: true
+    given: "$.paths.*.*.parameters.[?(@.in!='header')].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z]+[a-zA-Z0-9.-]+$"
+
+  # Require 3-part Semantic Versions as the spec versions
+  semantic-version:
+    description: Las API estarán versionadas por tres (3) dígitos.
+    severity: error
+    recommended: true
+    message: "VERS01: Specs should follow semantic versioning. {{value}} is not a valid version."
+    given: $.info.version
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([0-9]+.[0-9]+.[0-9])$"
+
+################################################################################################
+# FIN - General Functions
+################################################################################################
+  
+
+################################################################################################
+# INICIO - Reglas para normalizacion. Severity: INFO
+################################################################################################
+
+# NRMZ01 - Normalization - Grouping in the 'ids' prefix
+  normalization01-definitions-prefixNames:
+    description: "Sugerencia - Normalizar en un prefijo denominado 'ids'."
+    severity: info
+    message: "NRMZ01: Normalize - Suggested to group in a prefix called 'ids'."
+    recommended: true
+    given: "$.definitions.*.properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(id|Id)$"
+
+# NRMZ02 - Normalization - Grouping in the 'codes' prefix
+  normalization02-definitions-prefixNames:
+    description: "Sugerencia - Normalizar en un prefijo denominado 'codes'."
+    severity: info
+    message: "NRMZ02: Normalize - Suggested to group in a prefix called 'codes'."
+    recommended: true
+    given: "$.definitions.*.properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(code|Code)$"
+
+# NRMZ03 - Normalization - Grouping in the 'dates' prefix
+  normalization03-definitions-prefixNames:
+    description: "Sugerencia - Normalizar en un prefijo denominado 'dates'."
+    severity: info
+    message: "NRMZ03: Normalize - Suggested to group in a prefix called 'dates'."
+    recommended: true
+    given: "$.definitions.*.properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(date|Date)$"
+
+# NRMZ04 - Normalization - Grouping in the 'resource' prefix
+  normalization04-definitions-prefixNames:
+    description: "Sugerencia - Normalizar en un prefijo denominado 'resource'."
+    severity: info
+    message: "NRMZ04: Normalize - Suggested to group in a prefix called 'resource'."
+    recommended: true
+    given: "$.definitions.*.properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(name|Name)$"
+
+# NRMZ05 - Normalization - Add suffix like 'Code' or 'Name'
+  normalization05-definitions-suffixNames:
+    description: "Sugerencia - Añadir un sufijo 'Code' o 'Name'."
+    severity: info
+    message: "NRMZ05: Normalize - Suggested to add suffix like 'Code' or 'Name'."
+    recommended: true
+    given: "$.definitions.*.properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(state|State|status|Status)$"
+
+# Black-list of words
+  black-list-words:
+    description: "Se limita el uso de las siguientes palabras que deberán obviarse en la redacción de la API."
+    severity: warn
+    message: "CONT09: Invalid property value: {{value}} (expected: Please, review black list.)."
+    recommended: true
+    given: [$..description, $..title, $..name, $..summary, $..operationId]
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\b(code|session|catch|package)\\b"
+
+
+################################################################################################
+# FIN - Reglas para normalizacion. Severity: INFO
+################################################################################################
+

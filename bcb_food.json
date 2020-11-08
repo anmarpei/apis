@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "swagger": "3.0",
   "info": {
     "title": "BCB - Burguer Cangre Burguer - Food API.",
     "description": "Food list offer at BCB API.",
@@ -111,7 +111,7 @@
           {
             "name": "firstPage",
             "in": "query",
-            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. (Cannot be negative).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -119,7 +119,7 @@
           {
             "name": "sizePage",
             "in": "query",
-            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. (Cannot be less than 1).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -446,7 +446,7 @@
       },
       "get": {
         "summary": "Find all Foods.",
-        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Find a list of Foods. Can be filtered by name, price, and isAvailable params. This method allow pagination(If isn't used, all results will be returned)').",
+        "description": "Find a list of Foods, can be filtered by name and isAvailable. Allows pagination and if isn't used, all results will be returned as a response.",
         "operationId": "getFoods",
         "tags": [
           "Foods"
@@ -475,7 +475,7 @@
           {
             "name": "firstPage",
             "in": "query",
-            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. (Cannot be negative).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -483,7 +483,7 @@
           {
             "name": "sizePage",
             "in": "query",
-            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. (Cannot be less than 1).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -550,7 +550,7 @@
           },
           {
             "in": "path",
-            "name": "FoodId",
+            "name": "foodId",
             "type": "number",
             "description": "Food Id.",
             "required": true
@@ -596,7 +596,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "FoodId",
+            "name": "foodId",
             "type": "number",
             "description": "Food Id.",
             "required": true
@@ -660,7 +660,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "FoodId",
+            "name": "foodId",
             "type": "number",
             "description": "Food Id.",
             "required": true
@@ -714,7 +714,7 @@
           {
             "name": "firstPage",
             "in": "query",
-            "description": "Requested page (first page is page 1). If not specified 1 is used. [Cannot be negative].",
+            "description": "Requested page (first page is page 1). If not specified 1 is used. (Cannot be negative).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -722,7 +722,7 @@
           {
             "name": "sizePage",
             "in": "query",
-            "description": "Number of retrieved elements per page. If not specified 10 is used. [Cannot be less than 1].",
+            "description": "Number of retrieved elements per page. If not specified 10 is used. (Cannot be less than 1).",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -935,7 +935,7 @@
     "/users/{userId}/orders": {
       "get": {
         "summary": "Get all Orders from a User.",
-        "description": "Here is to write a detailed description about the operation, with its restrictions and pretended to be selfexplicated for consumers. Maybe could add one example of use. (Maybe could start with 'Get all Orders by User Id').",
+        "description": "From a User identifier, finds all orders for this user.",
         "operationId": "getOrdersFromUser",
         "tags": [
           "Orders"
@@ -1162,26 +1162,6 @@
         }
       }
     },
-    "DemoResourceType": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "Demo Resource's Id."
-        },
-        "description": {
-          "type": "string",
-          "description": "Demo Resource's description."
-        },
-        "orders": {
-          "type": "array",
-          "description": "Demo Resources Orders.",
-          "items": {
-            "$ref": "#/definitions/OrderIdResource"
-          }
-        }
-      }
-    },
     "UserIdResource": {
       "type": "object",
       "properties": {
@@ -1191,14 +1171,6 @@
       }
     },
     "FoodIdResource": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        }
-      }
-    },
-    "OrderIdResource": {
       "type": "object",
       "properties": {
         "id": {
@@ -1266,26 +1238,6 @@
         }
       }
     },
-    "SuccessGetCollectionDemoResource": {
-      "type": "object",
-      "required": [
-        "data"
-      ],
-      "properties": {
-        "metadata": {
-          "type": "object"
-        },
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DemoResourceType"
-          }
-        },
-        "pagination": {
-          "$ref": "#/definitions/PaginationType"
-        }
-      }
-    },
     "SuccessUser": {
       "type": "object",
       "required": [
@@ -1325,20 +1277,6 @@
         },
         "data": {
           "$ref": "#/definitions/OrderType"
-        }
-      }
-    },
-    "SuccessDemoResource": {
-      "type": "object",
-      "required": [
-        "data"
-      ],
-      "properties": {
-        "metadata": {
-          "type": "object"
-        },
-        "data": {
-          "$ref": "#/definitions/DemoResourceType"
         }
       }
     },
